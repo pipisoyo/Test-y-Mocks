@@ -149,7 +149,8 @@ export const generateProducts =(numOfProducts)=>{
 };
 
 const createProduct = () => {
-  return {
+  try{
+  const productData = {
       _id:faker.database.mongodbObjectId(),
       title: faker.commerce.productName(),
       description: faker.lorem.sentences(),
@@ -160,6 +161,20 @@ const createProduct = () => {
       category: faker.commerce.department(),
       thumbnails: [faker.image.url()]
   };
+
+  const product = new ProductDTO(productData)
+  
+  // Verificar si algún campo obligatorio está vacío
+  for (const key in product) {
+    if (!product[key]) {
+        throw new Error(`Falta el campo '${key}' en el producto`);
+    }
+  }
+
+  return product; // Devolver el producto si todos los campos están presentes
+  } catch (error) {
+  throw new Error(`Error al crear el producto: ${error.message}`);
+  }
 };
 
-88711
+
