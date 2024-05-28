@@ -140,6 +140,7 @@ return "Correo enviado";
 export const generateProducts =(numOfProducts)=>{
   let products=[];
   for (let i = 0 ; i < numOfProducts; i++){
+      let product = createProduct()
       products.push(createProduct())
   }
 
