@@ -2,10 +2,10 @@ import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import bcrypt from 'bcrypt'
 import nodemailer from "nodemailer";
-import config from '../src/config.js';
-import ticketModel from '../src/dao/models/tickets.js';
+import config from '../config.js';
+import ticketModel from '../dao/models/tickets.js';
 import { faker } from '@faker-js/faker';
-import ProductDTO from '../src/dao/DTOs/products.dto.js';
+import ProductDTO from '../dao/DTOs/products.dto.js';
 
 // Obtiene la ruta del archivo actual
 const __filename = fileURLToPath(import.meta.url);

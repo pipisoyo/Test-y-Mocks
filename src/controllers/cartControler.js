@@ -3,7 +3,7 @@ import response from "../config/responses.js";
 import ticketModel from "../dao/models/tickets.js";
 import { cartsService } from "../repositories/index.js";
 import { productsService } from "../repositories/index.js";
-import { calculateTotalAmount, generateUniqueCode, sendMail } from "../../utils/utils.js";
+import { calculateTotalAmount, generateUniqueCode, sendMail } from "../utils/utils.js";
 
 /**
  * Controlador para la gestión de carritos.

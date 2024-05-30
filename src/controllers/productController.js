@@ -1,7 +1,10 @@
 import { io } from '../config/server.js';
 import responses from "../config/responses.js";
 import { productsService} from "../repositories/index.js";
-import generateProducts from "../../utils/utils.js"
+import { CustomError } from "../utils/customError.js";
+import { errorTypes } from "../utils/errorTypes.js"
+import { validarProducto } from "../utils/producstErros.js";
+
 
 /**
  * Controlador para la gestión de productos.
@@ -57,8 +60,13 @@ const productController = {
 
             // Validar los datos recibidos
             if (!title || !price || !code || !stock || !status || !category || !thumbnails) {
-                res.status(400).send({ status: "error", message: "Faltan campos obligatorios" });
-                return;
+                throw CustomError.CustomError(
+                    "Missing Data",
+                    "Enter the property name",
+                    errorTypes.ERROR_ARGUMENTOS_INVALIDOS,
+                    validarProducto(req.body)
+                );
+               
             }
 
             const result = await productsService.addProduct({ title, description, price, code, stock, status, category, thumbnails });
@@ -70,6 +78,7 @@ const productController = {
 
             res.status(201).send({ status: "success", payload: result });
         } catch (error) {
+            console.log(error)
             res.status(500).send({ status: "error", message: "Error interno del servidor" });
         }
     },

@@ -3,14 +3,15 @@
  */
 import express from "express";
 import handlebars from 'express-handlebars'
-import __dirname from "../utils/utils.js";
+import __dirname from "./utils/utils.js";
 import initilizePassport from "./config/passport.config.js";
 import appMiddlewares from './config/appMiddlewares.js';
 import { app } from './config/server.js';
 import { productsRouter, cartsRoutes, sessionsRouter, viewesRoutes } from './routes/routes.js'
 import initSocket from './socket.js';
 import realTimeProducts from "./routes/realTimeProductsRoute.js";
-import { generateProducts } from "../utils/utils.js";
+import { generateProducts } from "./utils/utils.js";
+import { errorHandler } from "./middleweres/errorHandler.middleware.js"
 
 // Middlewares
 /**
@@ -29,6 +30,7 @@ app.use("/api/products", productsRouter);
 app.use("/api/carts", cartsRoutes);
 app.use("/api/sessions", sessionsRouter);
 app.use(viewesRoutes);
+
 
  // Genera productos aleatorios
 app.get('/mockingproducts/:numOfProducts', (req, res) => {

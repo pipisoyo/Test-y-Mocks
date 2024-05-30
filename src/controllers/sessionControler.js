@@ -1,4 +1,4 @@
-import { createHash } from '../../utils/utils.js';
+import { createHash } from '../utils/utils.js';
 import userModel from '../dao/models/users.js';
 import response from '../config/responses.js';
 import userDTO from '../dao/DTOs/users.dto.js';
