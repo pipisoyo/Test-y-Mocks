@@ -53,34 +53,37 @@ const productController = {
      * @param {object} req - Objeto de solicitud.
      * @param {object} res - Objeto de respuesta.
      */
-    addProduct: async (req, res) => {
-        
-        try {
-            const { title, description, price, code, stock, status, category, thumbnails } = req.body;
+    addProduct:  (req, res) => {
+            let product = Object.keys(req.body)
+            console.log("🚀 ~ product:", product)
+            let productKeys = ["title", "description", "price", "code", "stock", "status", "category", "thumbnails"]
+            let invalidKeys = productKeys.filter(key => !product.includes(key)).map(key => ({
+                key,
+                index: productKeys.indexOf(key),
+                value: product[productKeys.indexOf(key)] || 'No ingresado'
+            }));
+            console.log("🚀 ~ invalidKeys:", invalidKeys)
+            let { title, description, price, code, stock, status, category, thumbnails } = req.body;
+                if (invalidKeys.length > 0) {
+                    console.log("🚀 ~ invalidKeys:", invalidKeys)
+                        throw CustomError.CustomError(
+                            "Missing Data",
+                            `Enter the property ${invalidKeys[0].key}`,
+                            errorTypes.ERROR_ARGUMENTOS_INVALIDOS,
+                            validarProducto(invalidKeys[0])
+                        )
+                }
 
-            // Validar los datos recibidos
-            if (!title || !price || !code || !stock || !status || !category || !thumbnails) {
-                throw CustomError.CustomError(
-                    "Missing Data",
-                    "Enter the property name",
-                    errorTypes.ERROR_ARGUMENTOS_INVALIDOS,
-                    validarProducto(req.body)
-                );
-               
-            }
-
-            const result = await productsService.addProduct({ title, description, price, code, stock, status, category, thumbnails });
+            const result =  productsService.addProduct({ title, description, price, code, stock, status, category, thumbnails });
 
             if (!result) {
                 res.status(500).send({ status: "error", message: "Error al agregar el producto" });
                 return;
             }
 
-            res.status(201).send({ status: "success", payload: result });
-        } catch (error) {
-            console.log(error)
-            res.status(500).send({ status: "error", message: "Error interno del servidor" });
-        }
+            res.setHeader("Content-Type", "application/json");
+            return res.status(201).json({ payload: result });
+    
     },
 
     

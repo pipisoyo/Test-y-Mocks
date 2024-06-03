@@ -38,7 +38,7 @@ app.get('/mockingproducts/:numOfProducts', (req, res) => {
     const products = generateProducts(numOfProducts);
     res.json(products); 
   });
-
+app.use(errorHandler);
 
 // Handlebars
 /**

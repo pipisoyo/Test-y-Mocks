@@ -1,9 +1,10 @@
+// @ts-nocheck
 export class CustomError {
-    static CustomError(name,message,code, description) {
+    static CustomError(name, message, code, description) {
         let error = new Error(message);
-        error.name= name;
+        error.name = name;
         error.code = code;
-        error.description = description
+        error.description = description;    
         return error;
     }
 }

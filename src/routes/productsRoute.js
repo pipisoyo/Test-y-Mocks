@@ -3,14 +3,8 @@ import productController from "../controllers/productController.js";
 import { authUser } from "../config/auth.js";
 //import Products from "../dao/mongo/products.mongo.js";
 //import { Products } from "../dao/memory/products.memory.js";
-import { errorHandler } from "../middleweres/errorHandler.middleware.js"
 
 const productsRouter = express.Router();
-
-/**
- * Middleware para manejar errores en las rutas de productos.
- */
-productsRouter.use(errorHandler);
 
 /**
  * Ruta para obtener todos los productos.
@@ -31,7 +25,7 @@ productsRouter.get("/:_id", productController.getById);
  * @name POST /products
  * @function
  */
-productsRouter.post("/", authUser(['admin']), productController.addProduct);
+productsRouter.post("/", productController.addProduct);
 
 /**
  * Ruta para insertar un documento.
